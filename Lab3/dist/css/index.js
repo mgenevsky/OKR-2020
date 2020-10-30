@@ -10,46 +10,23 @@ if (performance.navigation.type == 1) {
   }
 }
 setCookie('session', parseInt(getCookie('session')) + 1, 1);
-if(checkCookie('maxNumber')) document.querySelector('#numForm').remove();
+swap('#name1', '#name2'); // complete task 1
+countS(3,4, '#section-4'); // complete task 2
+if(checkCookie('maxNumber')) document.querySelector('#numForm').remove(); // complete task 3
 })
 
-const setCookie = (name, data, expDays) => {
- const d = new Date();
- d.setDate(d.getDate() + expDays);
- document.cookie = `${name}=${data};expires=${d.toUTCString()};path=/`;
+const swap = (id1, id2) => { //task 1
+	let tmp = document.querySelector(id1).innerHTML;
+	document.querySelector(id1).innerHTML = document.querySelector(id2).innerHTML;
+	document.querySelector(id2).innerHTML = tmp;
+}
+const countS = (a = 0, b=0 ,outputId) => { //task 2
+	let thirdSect = document.querySelector(outputId);
+	let s = a*b;
+	thirdSect.append('S = ' + s);
 }
 
-const checkCookie = (name) => {
- return (document.cookie.includes(name) && !document.cookie.includes(`${name}=;`));
-}
-
-const getCookie = (name) => {
-  return checkCookie(name) ? document.cookie.split(';').find((c) => c.includes(name)).split('=')[1] : 0;
-}
-
-
-
-
-
-
-
-
-
-
-
-//1
-let tmp = document.querySelector('#name1').innerHTML;
-document.querySelector('#name1').innerHTML = document.querySelector('#name2').innerHTML;
-document.querySelector('#name2').innerHTML = tmp;
-
-//2
-let thirdSect = document.querySelector('#section-4');
-let a = 3, b = 4;
-let s = a*b;
-thirdSect.append('S = ' + s);
-
-//3  Додаткові дані...
-document.querySelector('#numBtn').addEventListener('click', () => {
+document.querySelector('#numBtn').addEventListener('click', () => { //task 3
 	let first = document.querySelector('#input1').value;
     let second = document.querySelector('#input2').value;
     let third = document.querySelector('#input3').value;
@@ -67,12 +44,21 @@ document.querySelector('#numBtn').addEventListener('click', () => {
     setCookie('maxNumber', max,2);
     setCookie('minNumber', min,3);
 })
+const setCookie = (name, data, expDays) => {
+ const d = new Date();
+ d.setDate(d.getDate() + expDays);
+ document.cookie = `${name}=${data};expires=${d.toUTCString()};path=/`;
+}
+const checkCookie = (name) => {
+ return (document.cookie.includes(name) && !document.cookie.includes(`${name}=;`));
+}
+const getCookie = (name) => {
+  return checkCookie(name) ? document.cookie.split(';').find((c) => c.includes(name)).split('=')[1] : 0;
+}
 
 
 
-
-//4
-if( window.localStorage ){
+if( window.localStorage ){ //task 4
  if(localStorage.getItem('check')==null){localStorage.setItem('check',0);}
 else if(localStorage.getItem('check')==0){document.querySelector('#section-5').style.fontWeight = 'normal'}
 	else {document.querySelector('#section-5').style.fontWeight = 'bold'}
