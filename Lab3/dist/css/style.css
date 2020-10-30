@@ -74,33 +74,31 @@ ul li a{
 
 .section-3{ 
     width: 70%;
-    height: 220px;
+    height: 100px;
     box-sizing: border-box;
     padding: 20px;
     float: right;
     text-align: right;
     display: flex;
-    flex-flow: row wrap;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     background-color: #eaf1dd;
 }
 .section-4{
     width: 35%;
-    height: 510px;
+    height: 630px;
     box-sizing: border-box;
     padding: 20px;
     float: left;
     text-align: left;
     display: flex;
-    flex-flow: row wrap;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     background-color: white;
 }
 .section-5{ 
     width: 35%;
-    height: 510px;
+    height: 630px;
     box-sizing: border-box;
     padding: 20px;
     float: right;

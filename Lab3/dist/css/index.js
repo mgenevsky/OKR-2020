@@ -16,8 +16,6 @@ if(checkCookie('maxNumber')) document.querySelector('#numForm').remove(); // com
 
 //complete task 6
 makeEditableBlock('section-2');
-makeEditableBlock('section-3');
-makeEditableBlock('section-4');
 makeEditableBlock('section-5');
 initEditableBlocks();
 
