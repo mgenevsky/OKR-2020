@@ -13,6 +13,14 @@ setCookie('session', parseInt(getCookie('session')) + 1, 1);
 swap('#name1', '#name2'); // complete task 1
 countS(3,4, '#section-4'); // complete task 2
 if(checkCookie('maxNumber')) document.querySelector('#numForm').remove(); // complete task 3
+
+//complete task 6
+makeEditableBlock('section-2');
+makeEditableBlock('section-3');
+makeEditableBlock('section-4');
+makeEditableBlock('section-5');
+initEditableBlocks();
+
 })
 
 const swap = (id1, id2) => { //task 1
@@ -20,11 +28,14 @@ const swap = (id1, id2) => { //task 1
 	document.querySelector(id1).innerHTML = document.querySelector(id2).innerHTML;
 	document.querySelector(id2).innerHTML = tmp;
 }
+
+
 const countS = (a = 0, b=0 ,outputId) => { //task 2
 	let thirdSect = document.querySelector(outputId);
 	let s = a*b;
 	thirdSect.append('S = ' + s);
 }
+
 
 document.querySelector('#numBtn').addEventListener('click', () => { //task 3
 	let first = document.querySelector('#input1').value;
@@ -57,7 +68,6 @@ const getCookie = (name) => {
 }
 
 
-
 if( window.localStorage ){ //task 4
  if(localStorage.getItem('check')==null){localStorage.setItem('check',0);}
 else if(localStorage.getItem('check')==0){document.querySelector('#section-5').style.fontWeight = 'normal'}
@@ -81,8 +91,8 @@ function clickMeBold() {
     }
 }
 
-//5
-input.onblur = function() {
+
+input.onblur = function() { //task 5
   if (!input.value.includes('@')) {
     input.classList.add('invalid');
     error.innerHTML = 'Пожалуйста, введите правильный email.'
@@ -95,10 +105,27 @@ input.onfocus = function() {
   }
 };
 //6
-
-
-
-
-
-
-
+const initEditableBlocks = () => {
+  Array.from(document.getElementsByClassName('editArea')).map((area) => {
+    area.addEventListener('change', (event) => {
+      const newContent = event.target.value;
+      localStorage.setItem(`${event.target.parentNode.id}Content`, newContent);
+      event.target.parentNode.children[0].innerHTML = newContent;
+     })
+  })
+  Array.from(document.getElementsByClassName('editBtn')).map((btn) => {
+    btn.addEventListener('click', (event) => {
+      localStorage.removeItem(`${event.target.parentNode.id}Content`);
+      document.location.reload();
+    })
+  })
+}
+const makeEditableBlock = (blockId) => {
+	const content = localStorage.getItem(`${blockId}Content`) ? 
+	localStorage.getItem(`${blockId}Content`) : 
+	document.getElementById(blockId).innerHTML;
+	document.getElementById(blockId).innerHTML = content;
+	document.getElementById(blockId).insertAdjacentHTML('beforeend', 
+	`<textarea class="editArea">${content}</textarea>
+	<button type="submit" class="editBtn">Return default</button>`)
+}
