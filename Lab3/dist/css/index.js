@@ -1,22 +1,20 @@
 document.addEventListener('DOMContentLoaded', () => {
 if (performance.navigation.type == 1) {
   if(checkCookie('maxNumber')){
-    if(window.confirm(`Some Cookies have been created on this page: \n${document.cookie} \n Do you want to save them?`)) 
-    alert('Cookies were saved, now the page will be refreshed.');
+    if(window.confirm(`На этой странице были созданы куки: \n${document.cookie} \n Хотите ли Вы их сохранить?`)) 
+    alert('Куки были сохранены, страница будет обновлена...');
     else{
     	setCookie('maxNumber', '');
     	setCookie('minNumber', '');
     } 
   }
 }
-setCookie('session', parseInt(getCookie('session')) + 1, 1);
-swap('#name1', '#name2'); 
-countS(3,4, '#section-4'); 
-if(checkCookie('maxNumber')) document.querySelector('#numForm').remove(); 
+swap('#name1', '#name2');
+countS(3,4, '#section-4');
+if(checkCookie('maxNumber')) document.querySelector('#numForm').remove();
 makeEditableBlock('section-2');
 makeEditableBlock('section-5');
 initEditableBlocks();
-
 })
 
 const swap = (id1, id2) => { //task 1
@@ -34,22 +32,19 @@ const countS = (a = 0, b=0 ,outputId) => { //task 2
 
 
 document.querySelector('#numBtn').addEventListener('click', () => { //task 3
-	let first = document.querySelector('#input1').value;
-    let second = document.querySelector('#input2').value;
-    let third = document.querySelector('#input3').value;
-    let forth = document.querySelector('#input4').value;
-    let fifth = document.querySelector('#input5').value;
-    let sixth = document.querySelector('#input6').value;
-    let seventh = document.querySelector('#input7').value;
-    let eighth = document.querySelector('#input8').value;
-    let nineth = document.querySelector('#input9').value;
-    let tenth = document.querySelector('#input10').value;
-    let mass = [first, second, third, forth, fifth, sixth, seventh, eighth, nineth, tenth];
-    let max = Math.max(...mass);
-    let min = Math.min(...mass);
-    alert('The biggest number is ' + max+' \nThe smallest number is ' + min);
-    setCookie('maxNumber', max,2);
-    setCookie('minNumber', min,3);
+    let mass = [document.querySelector('#input1').value,
+                document.querySelector('#input2').value,
+                document.querySelector('#input3').value,
+                document.querySelector('#input4').value,
+                document.querySelector('#input5').value,
+                document.querySelector('#input6').value,
+                document.querySelector('#input7').value,
+                document.querySelector('#input8').value,
+                document.querySelector('#input9').value,
+                document.querySelector('#input10').value];
+    alert('Самое большое число: ' + Math.max(...mass)+' \nСамое маленькое число: ' + Math.min(...mass));
+    setCookie('maxNumber', Math.max(...mass), 2);
+    setCookie('minNumber', Math.min(...mass), 3);
 })
 const setCookie = (name, data, expDays) => {
  const d = new Date();
@@ -106,8 +101,14 @@ const initEditableBlocks = () => { //task 6
   Array.from(document.getElementsByClassName('editArea')).map((area) => {
     area.addEventListener('change', (event) => {
       const newContent = event.target.value;
-      localStorage.setItem(`${event.target.parentNode.id}Content`, newContent);
-      event.target.parentNode.children[0].innerHTML = newContent;
+        if (isValidHTML(newContent)) {
+          localStorage.setItem(`${event.target.parentNode.id}Content`, newContent);
+          event.target.parentNode.children[0].innerHTML = newContent;
+        }
+        else{
+          localStorage.removeItem(`${event.target.parentNode.id}Content`);
+          document.location.reload();
+        }
      })
   })
   Array.from(document.getElementsByClassName('editBtn')).map((btn) => {
@@ -121,8 +122,13 @@ const makeEditableBlock = (blockId) => {
 	const content = localStorage.getItem(`${blockId}Content`) ? 
 	localStorage.getItem(`${blockId}Content`) : 
 	document.getElementById(blockId).innerHTML;
-	document.getElementById(blockId).innerHTML = content;
-	document.getElementById(blockId).insertAdjacentHTML('beforeend', 
-	`<textarea class="editArea">${content}</textarea>
-	<button type="submit" class="editBtn">Return default</button>`)
+  document.getElementById(blockId).innerHTML = content;
+  document.getElementById(blockId).insertAdjacentHTML('beforeend', 
+  `<textarea class="editArea">${content}</textarea>
+  <button type="submit" class="editBtn">Return default</button>`)
 }
+const isValidHTML = (html) => {
+ const doc = document.createElement('div');
+ doc.innerHTML = html;
+ return doc.innerHTML === html;
+};
