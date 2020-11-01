@@ -10,11 +10,9 @@ if (performance.navigation.type == 1) {
   }
 }
 setCookie('session', parseInt(getCookie('session')) + 1, 1);
-swap('#name1', '#name2'); // complete task 1
-countS(3,4, '#section-4'); // complete task 2
-if(checkCookie('maxNumber')) document.querySelector('#numForm').remove(); // complete task 3
-
-//complete task 6
+swap('#name1', '#name2'); 
+countS(3,4, '#section-4'); 
+if(checkCookie('maxNumber')) document.querySelector('#numForm').remove(); 
 makeEditableBlock('section-2');
 makeEditableBlock('section-5');
 initEditableBlocks();
@@ -102,8 +100,9 @@ input.onfocus = function() {
     error.innerHTML = "";
   }
 };
-//6
-const initEditableBlocks = () => {
+
+
+const initEditableBlocks = () => { //task 6
   Array.from(document.getElementsByClassName('editArea')).map((area) => {
     area.addEventListener('change', (event) => {
       const newContent = event.target.value;
