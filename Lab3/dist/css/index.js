@@ -16,15 +16,16 @@ MaxMin('#numBtn','#input1','#input2','#input3','#input4','#input5','#input6','#i
 if( window.localStorage ){ //4
   if(localStorage.getItem('check')==null){
     localStorage.setItem('check',0);
-    document.querySelector('#midbold').checked = true;
+    document.querySelector('#midbold').setAttribute('checked',true);
   }
   else if(localStorage.getItem('check')==0){
     document.querySelector('#section-5').style.fontWeight = 'normal';
-    document.querySelector('#midbold').checked = true;
+    console.log(document.querySelector('#midbold'));
+    document.querySelector('#midbold').setAttribute('checked',true);
   }
   else {
     document.querySelector('#section-5').style.fontWeight = 'bold';
-    document.querySelector('#bold').checked = true;
+    document.querySelector('#bold').setAttribute('checked',true);
   }
 }
 else alert(" localStorage cant be used");
@@ -84,21 +85,25 @@ const getCookie = (name) => {
 function clickMidBold() { //task 4
     if (document.querySelector('#midbold').checked === true){
       document.querySelector('#section-5').style.fontWeight = 'normal';
+      document.querySelector('#bold').removeAttribute('checked');
       localStorage.setItem('check',0);
     }
     if (document.querySelector('#midbold').checked === false){
       document.querySelector('#section-5').style.fontWeight = 'bold';
+      document.querySelector('#bold').setAttribute('checked',true);
       localStorage.setItem('check',1);
     }
 }
 function clickBold() {
     if (document.querySelector('#bold').checked === false){
-      localStorage.setItem('check',0);
       document.querySelector('#section-5').style.fontWeight = 'normal';
+      document.querySelector('#midbold').setAttribute('checked',true);
+      localStorage.setItem('check',0);
     }
     if (document.querySelector('#bold').checked === true){
-      localStorage.setItem('check',1);
       document.querySelector('#section-5').style.fontWeight = 'bold';
+      document.querySelector('#midbold').removeAttribute('checked');
+      localStorage.setItem('check',1);
     }
 }
 
